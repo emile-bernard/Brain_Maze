@@ -37,10 +37,12 @@ function setupMiddleWalls() {
     let wallWidth = 400;
     let wallHeight = 40;
 
+    let wallXPos = 220;
+    let wallYPos = (height/2)+100;
 
     //Middle Walls
     let middleWall = createSprite(
-        220, height/2,
+        wallXPos, wallYPos,
         wallWidth, wallHeight);
     middleWall.shapeColor = color('#6e5018');
 

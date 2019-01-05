@@ -17,7 +17,7 @@ function createZombies() {
         let zombie = createSprite(200, 100);
         zombie.addImage(zombieImgList[zombieIndex]);
         zombie.friction = 0.1;
-        zombie.setSpeed(1, 0);
+        zombie.setSpeed(0.4, 0);
         zombie.rotateToDirection = true;
         zombies.add(zombie);
 
@@ -25,11 +25,12 @@ function createZombies() {
     }
 
     console.log(zombiesDNA);
+
+    // Change direction
+    // setTimeout(changeDirection, 2000);
 }
 
 function drawZombies() {
-
-    // Change direction
     changeDirection();
 
     if(zombies.length == 0) {
@@ -88,9 +89,13 @@ function changeDirection() {
                 direction=315;
             }
 
-            zombies[i].setSpeed(1, direction);
+            direction+=10;
+
+            zombies[i].setSpeed(0.4, direction);
         // }
     }
+    // Change direction
+    setTimeout(changeDirection, 2000);
 }
 
 function mutateDNA(zombieIndex) {
