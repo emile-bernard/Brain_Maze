@@ -24,16 +24,20 @@ function createZombies() {
         fillZombieGenome(zombieIndex);
     }
 
-    console.log(zombiesDNA);
+    // Change selected gene
+    selectedGene = 0;
+    changeSelectedGene();
 
-    // Change direction
-    // setTimeout(changeDirection, 2000);
+    console.log(zombiesDNA);
 }
 
 function drawZombies() {
     changeDirection();
 
     if(zombies.length == 0) {
+        let lastZombie = zombies.get(zombies.length-1);
+        let lastZombieIndex = zombies.indexOf(lastZombie);
+        saveDNA(lastZombieIndex);
         nextGen();
     }
 
@@ -48,70 +52,48 @@ function reachedGoal(zombie) {
 }
 
 function saveDNA(zombieIndex) {
-    bestZombieDNA = zombiesDNA[zombieIndex];
+    bestZombieDNA = [];
+    bestZombieDNA.push(zombiesDNA[zombieIndex]);
 }
 
 function fillZombieGenome(zombieIndex) {
-    // // Reset all DNA
-    // zombiesDNA = [];
-
     // Zombie genome
     // Add currently most successful zombie DNA
-    zombiesDNA[zombieIndex] = bestZombieDNA;
+    zombiesDNA[zombieIndex] = [];
+    zombiesDNA[zombieIndex].push(bestZombieDNA);
+
     // Mutate zombie DNA
-    mutateDNA(zombieIndex);
+    for (let i = 0; i < 1; i++) {
+        let geneIndex = Math.round(random(0, possibleGenes.length - 1));
+        let newGene = possibleGenes[geneIndex];
+
+        zombiesDNA[zombieIndex].push(newGene);
+    }
 }
 
 function changeDirection() {
     for (let i = 0; i < zombies.length; i++) {
-        // zombies[i].attractionPoint(0.2, goal.position.x, goal.position.y);
-        // for (let geneIndex = 0; geneIndex < zombiesDNA[i].length; geneIndex++) {
-            // let gene = zombiesDNA[i][geneIndex];
-            let gene = zombiesDNA[i];
+        let gene = zombiesDNA[i][selectedGene];
+        let direction = zombies[i].getDirection();
 
-            let direction = zombies[i].getDirection();
+        if (gene == 'L') {
+            direction=180;
+        } else if (gene == 'R') {
+            direction=0;
+        } else if (gene == 'U') {
+            direction=270;
+        } else if (gene == 'D') {
+            direction=90;
+        } else if (gene == 'LD') {
+            direction=135;
+        } else if (gene == 'RD') {
+            direction=45;
+        } else if (gene == 'LU') {
+            direction=225;
+        } else if (gene == 'RU') {
+            direction=315;
+        }
 
-            if (gene == 'L') {
-                direction=180;
-            } else if (gene == 'R') {
-                direction=0;
-            } else if (gene == 'U') {
-                direction=270;
-            } else if (gene == 'D') {
-                direction=90;
-            } else if (gene == 'LD') {
-                direction=135;
-            } else if (gene == 'RD') {
-                direction=45;
-            } else if (gene == 'LU') {
-                direction=225;
-            } else if (gene == 'RU') {
-                direction=315;
-            }
-
-            direction+=10;
-
-            zombies[i].setSpeed(0.4, direction);
-        // }
+        zombies[i].setSpeed(0.5, direction);
     }
-    // Change direction
-    setTimeout(changeDirection, 2000);
-}
-
-function mutateDNA(zombieIndex) {
-    // Add random new genes
-    //for(let i = 0; i < 1; i++) {
-        let geneIndex = Math.floor(Math.random()*possibleGenes.length);
-        let newGene = possibleGenes[geneIndex];
-        console.log(geneIndex);
-        console.log(newGene);
-
-        // zombiesDNA[zombieIndex].push(newGene);
-        zombiesDNA[zombieIndex]=newGene;
-
-        // Repeat gene
-        // for(let i = 0; i < 300; i++) {
-        //     zombiesDNA[index].push(newGene);
-        // }
-    //}
 }

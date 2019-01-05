@@ -8,7 +8,7 @@ let wallImg;
 let goal;
 let goalImg;
 
-const zombieCount = 10;
+const zombieCount = 2;
 let zombieImgList = [];
 let zombies;
 let possibleGenes = ['L', 'R', 'U', 'D', 'LD', 'RD', 'LU', 'RU'];
@@ -16,6 +16,8 @@ let zombiesDNA = [];
 let bestZombieDNA = [];
 
 let generationCount = 0;
+
+let selectedGene = 0;
 
 function preload() {
     preloadBackgroundSong();

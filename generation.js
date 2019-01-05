@@ -9,6 +9,7 @@ function drawGenerationCount() {
 
 function nextGen() {
     generationCount += 1;
+
     resetZombies();
 }
 
@@ -18,4 +19,15 @@ function resetZombies() {
     }
 
     createZombies();
+}
+
+function changeSelectedGene() {
+    if(selectedGene == zombiesDNA[0].length){
+        selectedGene = 0;
+    }
+
+    selectedGene++;
+    console.log('bestZombieDNA: ' + bestZombieDNA);
+
+    setTimeout(changeSelectedGene, 4000);
 }
