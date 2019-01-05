@@ -35,7 +35,7 @@ function drawZombies() {
     changeDirection();
 
     if(zombies.length == 0) {
-        let lastZombie = zombies.get(zombies.length-1);
+        let lastZombie = zombies.get(zombies.length);
         let lastZombieIndex = zombies.indexOf(lastZombie);
         saveDNA(lastZombieIndex);
         nextGen();
@@ -52,8 +52,8 @@ function reachedGoal(zombie) {
 }
 
 function saveDNA(zombieIndex) {
-    bestZombieDNA = [];
-    bestZombieDNA.push(zombiesDNA[zombieIndex]);
+    //bestZombieDNA.push(zombiesDNA[zombieIndex]);
+    bestZombieDNA=zombiesDNA[zombieIndex];
 }
 
 function fillZombieGenome(zombieIndex) {

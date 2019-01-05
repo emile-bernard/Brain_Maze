@@ -29,5 +29,5 @@ function changeSelectedGene() {
     selectedGene++;
     console.log('bestZombieDNA: ' + bestZombieDNA);
 
-    setTimeout(changeSelectedGene, 4000);
+    setTimeout(changeSelectedGene, 3000);
 }
