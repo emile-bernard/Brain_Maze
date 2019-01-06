@@ -1,7 +1,7 @@
 # Brain_Maze
 
 ## Description
-This project is a simple video game AI using p5.js the library.
+This project is a simple evolutionary programming experience using p5.js the library.
 
 ## Previews
 ![Poster](docs/poster/brain_maze_poster.png?raw=true "Poster")
