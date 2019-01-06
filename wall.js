@@ -1,55 +1,68 @@
-function preloadWallImg() {
-    wallImg = loadImage('./assets/image/original_box.png');
-}
+class WallController {
+    constructor() {
 
-function setupWalls() {
-    walls = new Group();
+    }
 
-    setupMiddleWalls();
+    preloadWallImg() {
+        this.wallImg = loadImage('./assets/image/original_box.png');
+    }
 
-    //Surrounding Walls
-    let bottomWall = createSprite(
-        width, height,
-        width*2, 50);
-    bottomWall.shapeColor = color('#353836');
-    walls.add(bottomWall);
+    setupWalls() {
+        this.walls = new Group();
 
-    let upperWall = createSprite(
-        width, 0,
-        width*2, 50);
-    upperWall.shapeColor = color('#353836');
-    walls.add(upperWall);
+        this.setupMiddleWalls();
 
-    let leftWall = createSprite(
-        0, height,
-        50, height*2);
-    leftWall.shapeColor = color('#353836');
-    walls.add(leftWall);
+        //Surrounding Walls
+        let bottomWall = createSprite(
+            width, height,
+            width*2, 50);
+        bottomWall.shapeColor = color('#353836');
+        this.walls.add(bottomWall);
 
-    let rightWall = createSprite(
-        width, height,
-        50, height*2);
-    rightWall.shapeColor = color('#353836');
-    walls.add(rightWall);
-}
+        let upperWall = createSprite(
+            width, 0,
+            width*2, 50);
+        upperWall.shapeColor = color('#353836');
+        this.walls.add(upperWall);
 
-function setupMiddleWalls() {
-    let wallWidth = 400;
-    let wallHeight = 40;
+        let leftWall = createSprite(
+            0, height,
+            50, height*2);
+        leftWall.shapeColor = color('#353836');
+        this.walls.add(leftWall);
 
-    let wallXPos = 220;
-    let wallYPos = (height/2)+100;
+        let rightWall = createSprite(
+            width, height,
+            50, height*2);
+        rightWall.shapeColor = color('#353836');
+        this.walls.add(rightWall);
+    }
 
-    //Middle Walls
-    let middleWall = createSprite(
-        wallXPos, wallYPos,
-        wallWidth, wallHeight);
-    middleWall.shapeColor = color('#6e5018');
+    setupMiddleWalls() {
+        let wallWidth = 400;
+        let wallHeight = 40;
 
-    // middleWall.addImage(wallImg);
-    walls.add(middleWall);
-}
+        let wallXPos = 220;
+        let wallYPos = (height/2)+100;
 
-function hitWall(zombie) {
-    zombie.remove();
+        //Middle Walls
+        let middleWall = createSprite(
+            wallXPos, wallYPos,
+            wallWidth, wallHeight);
+        middleWall.shapeColor = color('#6e5018');
+
+        // middleWall.addImage(wallImg);
+        this.walls.add(middleWall);
+    }
+
+    hitWall(zombie) {
+        let deadZombieNumber = zombieController.getZombies().indexOf(zombie);
+        let deadZombieIndex = zombieController.getZombiesAlive().indexOf(deadZombieNumber);
+        zombieController.getZombiesAlive().splice(deadZombieIndex, 1);
+        zombie.remove();
+    }
+
+    getWalls() {
+        return this.walls;
+    }
 }
