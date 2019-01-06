@@ -6,7 +6,8 @@ This project is a simple video game AI using p5.js the library.
 ## Previews
 ![Poster](docs/poster/brain_maze_poster.png?raw=true "Poster")
 
-![Capture](docs/preview/Capture.PNG?raw=true "Capture")
+![Capture1](docs/preview/Capture1.PNG?raw=true "Capture1")
+![Capture2](docs/preview/Capture2.PNG?raw=true "Capture2")
 
 ## Setup
 - Open project with the Webstorm ide and open the index.html file.
