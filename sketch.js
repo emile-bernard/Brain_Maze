@@ -4,7 +4,8 @@ let backgroundSong;
 let wallController = new WallController();
 let goalController = new GoalController();
 
-const zombieCount = 4;
+const zombieCount = 1;
+const zombieSpeed = 1;
 let zombieController = new ZombieController(zombieCount);
 let evolutionController = new EvolutionController();
 

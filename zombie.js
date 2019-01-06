@@ -21,7 +21,7 @@ class ZombieController {
     }
 
     createZombies() {
-        this.zombiesAlive = [];
+        this.zombiesAlive = new Array(zombieCount);
 
         this.zombies = new Group();
 
@@ -29,33 +29,33 @@ class ZombieController {
             let zombie = createSprite(200, 100);
             zombie.addImage(this.zombieImgList[zombieIndex]);
             zombie.friction = 0.1;
-            zombie.setSpeed(0.4, 0);
+            zombie.setSpeed(zombieSpeed, 0);
             zombie.rotateToDirection = true;
             this.zombies.add(zombie);
 
-            this.zombiesAlive.push(this.zombies.indexOf(zombie));
+            // this.zombiesAlive.push(this.zombies.indexOf(zombie));
+            this.zombiesAlive[zombieIndex] = this.zombies.indexOf(zombie);
 
             this.fillZombieGenome(zombieIndex);
         }
 
         // Change selected gene
-        evolutionController.setSelectedGene(0);
+        // evolutionController.resetSelectedGene();
         evolutionController.changeSelectedGene();
 
+        console.log('zombiesDNA: ');
         console.log(this.zombiesDNA);
     }
 
     drawZombies() {
         this.changeDirection();
 
-        if(this.zombies.length == 0) {
-            //let lastZombie = zombies.get(zombies.length);
-            // let lastZombieIndex = zombies.indexOf(lastZombie);
-
+        if(this.zombies.length == 1) {
             let lastZombieIndex = this.zombiesAlive[0];
-            // console.log('zombiesAlive: ' + zombiesAlive);
-            // console.log('lastZombieIndex: ' + lastZombieIndex);
             this.saveDNA(lastZombieIndex);
+        }
+
+        if(this.zombies.length == 0) {
             evolutionController.nextGen();
         }
 
@@ -71,47 +71,71 @@ class ZombieController {
 
     saveDNA(zombieIndex) {
         //bestZombieDNA.push(zombiesDNA[zombieIndex]);
-        this.bestZombieDNA=this.zombiesDNA[zombieIndex];
+        this.bestZombieDNA = this.zombiesDNA[zombieIndex];
+
+        // console.log('bestZombieDNA: ');
+        // console.log(this.bestZombieDNA);
     }
 
     fillZombieGenome(zombieIndex) {
         // Zombie genome
         // Add currently most successful zombie DNA
-        this.zombiesDNA[zombieIndex] = [];
-        this.zombiesDNA[zombieIndex].push(this.bestZombieDNA);
+        // this.zombiesDNA[zombieIndex] = [];
 
-        // Mutate zombie DNA
-        for (let i = 0; i < 1; i++) {
-            let geneIndex = Math.round(random(0, evolutionController.getPossibleGenes().length - 1));
-            let newGene = evolutionController.getPossibleGenes()[geneIndex];
+        // console.log('bestZombieDNA: ');
+        // console.log(this.bestZombieDNA);
 
-            this.zombiesDNA[zombieIndex].push(newGene);
-        }
+        // this.zombiesDNA[zombieIndex].push(this.bestZombieDNA);
+        this.zombiesDNA[zombieIndex] = this.bestZombieDNA;
+
+        // Mutate zombie DNA by adding one extra gene
+        let geneIndex = Math.round(random(0, evolutionController.getPossibleGenes().length - 1));
+        let newGene = evolutionController.getPossibleGenes()[geneIndex];
+
+        console.log('newGene: ');
+        console.log(newGene);
+
+        this.zombiesDNA[zombieIndex].push(newGene);
+        // this.zombiesDNA[zombieIndex] = newGene;
     }
 
     changeDirection() {
         for (let i = 0; i < this.zombies.length; i++) {
             let gene = this.zombiesDNA[i][evolutionController.getSelectedGene()];
-            let direction = this.zombies[i].getDirection();
+            // let direction = this.zombies[i].getDirection();
+            let direction = 0;
+
+            // console.log('direction: ');
+            // console.log(direction);
 
             if (gene == 'L') {
-                direction=180;
+                direction = 180;
             } else if (gene == 'R') {
-                direction=0;
+                direction = 0;
             } else if (gene == 'U') {
-                direction=270;
+                direction = 270;
             } else if (gene == 'D') {
-                direction=90;
+                direction = 90;
             } else if (gene == 'LD') {
-                direction=135;
+                direction = 135;
             } else if (gene == 'RD') {
-                direction=45;
+                direction = 45;
             } else if (gene == 'LU') {
-                direction=225;
+                direction = 225;
             } else if (gene == 'RU') {
-                direction=315;
+                direction = 315;
+            } else {
+                // console.log('No direction set!');
             }
-            this.zombies[i].setSpeed(0.5, direction);
+            this.zombies[i].setSpeed(zombieSpeed, direction);
+        }
+    }
+
+    resetZombieGenome() {
+        this.zombiesDNA = [];
+
+        for(let i=0; i<zombieCount; i++) {
+            this.zombiesDNA.push([]);
         }
     }
 

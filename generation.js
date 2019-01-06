@@ -15,7 +15,7 @@ class EvolutionController {
     }
 
     nextGen() {
-        this.generationCount += 1;
+        this.generationCount++;
         this.resetZombies();
     }
 
@@ -23,14 +23,29 @@ class EvolutionController {
         for (let i = 0; i < zombieController.getZombies().length; i++) {
             zombieController.getZombies()[i].remove();
         }
+
+        this.resetSelectedGene();
+
+        zombieController.resetZombieGenome();
         zombieController.createZombies();
     }
 
     changeSelectedGene() {
-        if(this.selectedGene == zombieController.getZombiesDNA()[0].length){
+
+        console.log('selectedGene: ');
+        console.log(this.selectedGene);
+
+        console.log('Number of genes');
+        console.log(zombieController.getZombiesDNA()[0].length);
+
+        if(this.selectedGene == zombieController.getZombiesDNA()[0].length) {
             this.selectedGene = 0;
         }
         this.selectedGene++;
+
+        // console.log('selectedGene: ');
+        // console.log(this.selectedGene);
+
         setTimeout(this.changeSelectedGene, 3000);
     }
 
@@ -38,8 +53,8 @@ class EvolutionController {
         return this.selectedGene;
     }
 
-    setSelectedGene(geneValue) {
-        this.selectedGene = geneValue;
+    resetSelectedGene() {
+        this.selectedGene = 0;
     }
 
     getPossibleGenes() {
